@@ -9,7 +9,7 @@ mongoose.connect('mongodb://localhost:27017/formacionescae',  (err,res) => {
   } else{
       console.log("La conexion a base esta corriendo correctamente");
       app.listen(port,function(){
-          console.log("servidor del api rest online");
+          console.log("servidor del api rest online en http://localhost:"+port) ;
       });
   } 
     

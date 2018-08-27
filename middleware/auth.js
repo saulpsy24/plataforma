@@ -5,14 +5,14 @@ var secret = 'Zionzoo24#_2018';
 
 exports.ensureAuth = function(req,res,next){
     if(!req.headers.authorization){
-        return res.status(403).send({message:'La peticion no tiene la auth'});
+        return res.status(403).send({message:'Falta el token'});
        
        }
     var token= req.headers.authorization.replace(/['"]+/g,'');
     try{
         var payload = jwt.decode(token,secret);
         if(payload.exp <= moment().unix()){
-           return res.status(401).send({message:'Token expiro'});
+           return res.status(401).send({message:'Token expiró'});
            }
         
 
