@@ -36,11 +36,11 @@ function getCurso(req, res) {
 function saveCurso(req, res) {
     var curso = new Curso();
     var params = req.body;
-    turno.name = params.name;
-    turno.dateS = params.dateS;
-    turno.image = params.image;
-    turno.description = params.description;
-    turno.categoria = params.categoria;
+    curso.name = params.name;
+    curso.dateS = params.dateS;
+    curso.image = params.image;
+    curso.description = params.description;
+    curso.categoria = params.categoria;
 
     curso.save((err, cursoSaved) => {
         if (err) {
@@ -127,41 +127,41 @@ function deleteCurso(req, res) {
     var cursoId = req.params.id;
     Curso.findByIdAndRemove(cursoId, (err, cursoRemoved) => {
        
+        if (err) {
+            res.status(500).send({
+                message: 'Error al borrar el curso'
+            });
+        } else {
+            if (!cursoRemoved) {
+                res.status(404).send({
+                    message: 'No se pudo borrar el curso'
+                });
+            } else {
+                contenido.find({
+                    curso: cursoRemoved._id
+                }).remove((err, contenidoRemoved) => {
                     if (err) {
                         res.status(500).send({
-                            message: 'Error al borrar el curso'
+                            message: 'Error en el servidor al borrar el contenido'
                         });
                     } else {
-                        if (!cursoRemoved) {
+                        if (!contenidoRemoved) {
                             res.status(404).send({
-                                message: 'No se pudo borrar el curso'
+                                message: 'No se pudo borrar el contenido'
                             });
                         } else {
-                            contenido.find({
-                                curso: cursoRemoved._id
-                            }).remove((err, contenidoRemoved) => {
-                                if (err) {
-                                    res.status(500).send({
-                                        message: 'Error en el servidor al borrar el contenido'
-                                    });
-                                } else {
-                                    if (!contenidoRemoved) {
-                                        res.status(404).send({
-                                            message: 'No se pudo borrar el contenido'
-                                        });
-                                    } else {
-                                        res.status(200).send({
-                                            Curso: cursoRemoved
-                                        });
-
-                                    }
-                                }
+                            res.status(200).send({
+                                Curso: cursoRemoved
                             });
 
                         }
                     }
                 });
+
             }
+        }
+    });
+}
 
 
 

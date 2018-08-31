@@ -9,9 +9,9 @@ var cursoSchema = Schema({
     description: String,
     
     event:{
-        type: Schema.ObjectId,ref:'categoria'
+        type: Schema.ObjectId,ref:'Categoria'
     }
         
 });
 
-module.exports = mongoose.model('curso', cursoSchema);
+module.exports = mongoose.model('Curso', cursoSchema);
