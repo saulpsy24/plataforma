@@ -39,10 +39,9 @@ function saveMateria(req, res) {
     var params = req.body;
     materia.name = params.name;
     materia.profesor = params.profesor;
-    materia.salon = params.salon;
-    materia.cupo = params.cupo;
     materia.programa = params.programa;
     materia.inscripcion = params.inscripcion;
+    materia.usuario = params.usuario;
 
     materia.save((err, materiaSaved) => {
         if (err) {

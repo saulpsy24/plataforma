@@ -6,10 +6,11 @@ var materiaSchema = Schema({
    inscripcion:{
        type: Schema.ObjectId,ref:'Inscripcion'
    },
+   usuario:{
+        type: Schema.ObjectId,ref:'Usuario'
+    },
    name: String,
    profesor: String,
-   salon: String,
-   cupo: Number,
    programa: String
         
 });

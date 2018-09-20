@@ -10,7 +10,7 @@ api.get('/materia/:id',md_auth.ensureAuth,materiaController.getMateria);
 api.post('/materia',md_auth.ensureAuth,materiaController.saveMateria);
 api.get('/materias/:inscripcion?',md_auth.ensureAuth,materiaController.getMaterias);
 api.put('/materia/:id', md_auth.ensureAuth, materiaController.updateMateria);
-api.delete('/materia/:id', md_auth.ensureAuth, materiaController.getMateria);
+api.delete('/materia/:id', md_auth.ensureAuth, materiaController.deleteMateria);
 
 
 module.exports = api;
