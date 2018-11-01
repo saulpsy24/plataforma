@@ -1,11 +1,12 @@
 'use strict'
 var path = require('path');
 var fs = require('fs');
-var Categoria = require('../models/usuario');
+var Categoria = require('../models/categoria');
 var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../services/jwt');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
+var ObjectId = require('mongodb').ObjectID;
 
 var express = require('express');
 var router = express.Router;
@@ -19,7 +20,7 @@ function saveCateogira(req, res) {
   
 
    Categoria.findOne({
-    'nombre': categoria.name
+    'name': categoria.name
 }, function (err, elements) {
     if(!elements){  
      categoria.save((err, categoriaStored) => {
@@ -132,7 +133,7 @@ function getCategorias(req, res) {
                 });
             } else {
                 res.status(200).send({
-                    categorias: categoriaID
+                     categorias
                 });
             }
         }
