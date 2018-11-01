@@ -2,7 +2,7 @@
 var path = require('path');
 var fs = require('fs');
 var mongoosePaginate = require('mongoose-pagination');
-var Leccion = require('../models/Leccion');
+var Leccion = require('../models/leccion');
 var Curso = require('../models/curso');
 var ObjectId = require('mongodb').ObjectId;
 
@@ -17,7 +17,7 @@ function getLeccion(req, res) {
     }).exec((err, leccion) => {
         if (err) {
             res.status(500).send({
-                message: 'Error en la peticion al servidor'
+                message: 'Error al obtener la leccion en el servidor'
             });
         } else {
             if (!leccion) {
@@ -46,7 +46,7 @@ function saveLeccion(req, res) {
     leccion.save((err, contSaved) => {
         if(err){
             res.status(500).send({
-                message: 'Error al guardar en el Servidor la leccion'
+                message: 'Error al guardar la leccion en el Servidor'
             });
         }else{
             if (!contSaved) {
@@ -62,18 +62,18 @@ function saveLeccion(req, res) {
     });
 }
     
-//          Obtener todos los contenidos o los relacionados con algún curso
+//          Obtener todas las lecciones o las relacionados con algún curso
 
 function getLecciones(req, res) {
     var lecId = req.params.id;
     if (!lecId) {
 
-        // Si no existe, obtienes todos los contenidos
+        // Si no existe, obtienes todas las lecciones
 
         var find = leccion.find({}).sort('titulo');
     } else {
         
-        // Mostrar por Id
+        // Mostrar por Id 
 
         var find = leccion.find({
             curso: cursoId
@@ -102,7 +102,8 @@ function getLecciones(req, res) {
     })
 }
 
-//          Actualiza Curso            //
+//          Actualiza Leccion            //
+
 function updateLeccion(req, res) {
     var lecId = req.params.id;
     var update = req.body;
@@ -126,7 +127,7 @@ function updateLeccion(req, res) {
     });
 }
 
-//          Borrar Contenido            
+//          Borrar Leccion          //            
 
 function deleteLeccion(req, res) {
     var lecId = req.params.id;
