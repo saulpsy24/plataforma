@@ -4,12 +4,16 @@ var Schema = mongoose.Schema;
 
 var cursoSchema = Schema({
     name: String,
-    dateS: String,
     image: String,
     description: String,
-    
-    event:{
-        type: Schema.ObjectId,ref:'Categoria'
+    value:String,
+    instructor:{
+        type: Schema.ObjectId,ref:'Usuario'
+    },
+    rating:String,
+    promocional:String,
+    categoria:{
+        type:Schema.ObjectId,ref:'Categoria'
     }
         
 });

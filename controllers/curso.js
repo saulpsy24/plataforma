@@ -3,7 +3,7 @@ var path = require('path');
 var fs = require('fs');
 var mongoosePaginate = require('mongoose-pagination');
 var categoria = require('../models/categoria');
-var Curso = require('../models/curno');
+var Curso = require('../models/curso');
 
 //          Obtener 1 Curso            //
 
@@ -36,16 +36,20 @@ function getCurso(req, res) {
 function saveCurso(req, res) {
     var curso = new Curso();
     var params = req.body;
-    curso.name = params.name;
-    curso.dateS = params.dateS;
-    curso.image = params.image;
-    curso.description = params.description;
-    curso.categoria = params.categoria;
+    curso.name=params.name;
+    curso.description=params.description;
+    curso.value=params.value;
+    curso.rating=params.rating;
+    curso.promocional=params.promo;
+    curso.categoria=params.categoria;
+    curso.instructor=params.instructor;
+    curso.image='select one..'
 
     curso.save((err, cursoSaved) => {
         if (err) {
             res.status(500).send({
-                message: 'Error en el Servidor'
+                message: 'Error en el Servidor',
+                error:err
             });
 
         } else {
@@ -64,20 +68,22 @@ function saveCurso(req, res) {
 
 //          Obtener todos los Cursos            //
 function getCursos(req, res) {
-    var categotiaId = req.params.event;
+    var categotiaId=req.params.id;
     if (!categotiaId) {
 
         // Obtener todos los cursos de la base
-        var find = Curso.find({}).sort('dateS');
+        var find = Curso.find({}).sort('name');
     } else {
 
         // Obtener cursos por categoria
         var find = Curso.find({
             categoria: categotiaId
-        }).sort('dateS');
+        }).sort('name');
     }
     find.populate({
         path: 'categoria'
+    }).populate({
+        path:'instructor'
     }).exec((err, cursos) => {
         if (err) {
             res.status(500).send({
