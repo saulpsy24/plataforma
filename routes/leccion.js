@@ -1,16 +1,16 @@
 'use strict'
 var express = require('express');
-var contenidoController = require('../controllers/contenido');
+var leccionController = require('../controllers/leccion');
 var api = express.Router();
 var md_auth= require('../middleware/auth');
 var multipart = require('connect-multiparty');
 
 
-api.get('/contenido/:id',md_auth.ensureAuth,contenidoController.getContenido);
-api.post('/contenido',md_auth.ensureAuth,contenidoController.saveContenido);
-api.get('/contenido/:curso?',md_auth.ensureAuth,contenidoController.getContenidos);
-// api.put('/curso/:id', md_auth.ensureAuth, contenidoController.updateContenido);
-api.delete('/contenido/:id', md_auth.ensureAuth, contenidoController.deleteContenido);
+api.get('/leccion/:id',md_auth.ensureAuth,leccionController.getLeccion);
+api.post('/leccion',md_auth.ensureAuth,leccionController.saveLeccion);
+api.get('/lecciones/:curso?',md_auth.ensureAuth,leccionController.getLecciones);
+api.put('/leccion/:id', md_auth.ensureAuth, leccionController.updateLeccion);
+api.delete('/leccion/:id', md_auth.ensureAuth, leccionController.deleteLeccion);
 
 
 module.exports = api;

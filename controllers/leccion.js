@@ -7,32 +7,32 @@ var Curso = require('../models/curso');
 var ObjectId = require('mongodb').ObjectId;
 
 
-//          Obtener 1 contenido 
+//          Obtener 1 leccion
 
 function getLeccion(req, res) {
-    var idCont = req.params.id;
+    var idLec = req.params.id;
 
-    Leccion.findById(idCont).populate({
+    Leccion.findById(idLec).populate({
         path: 'Curso'
-    }).exec((err, contenido) => {
+    }).exec((err, leccion) => {
         if (err) {
             res.status(500).send({
                 message: 'Error en la peticion al servidor'
             });
         } else {
-            if (!contenido) {
+            if (!leccion) {
                 res.status(404).send({
-                    message: 'No existe contenido'
+                    message: 'No existe la leccion'
                 });
             } else {
                 res.status(200).send({
-                    contenido
+                    leccion
                 });
             }
         }
     });
 }
-//          Guradar el Contenido
+//          Guradar la leccion
 
 function saveLeccion(req, res) {
     var leccion = new Leccion();
@@ -46,12 +46,12 @@ function saveLeccion(req, res) {
     leccion.save((err, contSaved) => {
         if(err){
             res.status(500).send({
-                message: 'Error al guardar en el Servidor'
+                message: 'Error al guardar en el Servidor la leccion'
             });
         }else{
             if (!contSaved) {
                 res.status(404).send({
-                    message: 'Error al guardar el contenido'
+                    message: 'Error al guardar la leccion'
                 });
             } else {
                 res.status(200).send({
@@ -62,20 +62,20 @@ function saveLeccion(req, res) {
     });
 }
     
-//          Obtener todos los contenidos
+//          Obtener todos los contenidos o los relacionados con algún curso
 
-function getContenidos(req, res) {
-    var contId = req.params.id;
-    if (!contId) {
+function getLecciones(req, res) {
+    var lecId = req.params.id;
+    if (!lecId) {
 
         // Si no existe, obtienes todos los contenidos
 
-        var find = Asist.find({}).sort('name');
+        var find = leccion.find({}).sort('titulo');
     } else {
         
         // Mostrar por Id
 
-        var find = Contenido.find({
+        var find = leccion.find({
             curso: cursoId
         }).sort('name');
     }
@@ -83,42 +83,66 @@ function getContenidos(req, res) {
         path: 'curso',
        
 
-    }).exec((err, contenidos) => {
+    }).exec((err, lecciones) => {
         if (err) {
             res.status(500).send({
                 message: 'Error en el path'
             });
         } else {
-            if (!contenidos) {
+            if (!lecciones) {
                 res.status(404).send({
-                    message: 'No hay contenido relacionado'
+                    message: 'No hay lecciones relacionadas'
                 });
             } else {
                 res.status(200).send({
-                    contenido: contenidos
+                    leccion: lecciones
                 });
             }
         }
     })
 }
 
+//          Actualiza Curso            //
+function updateLeccion(req, res) {
+    var lecId = req.params.id;
+    var update = req.body;
+
+    leccion.findByIdAndUpdate(lecId, update, (err, lecUpdated) => {
+        if (err) {
+            res.status(500).send({
+                message: 'Error al actualizar la leccion'
+            });
+        } else {
+            if (!lecUpdated) {
+                res.status(404).send({
+                    message: 'No se pudo actualizar la leccion'
+                });
+            } else {
+                res.status(200).send({
+                    Leccion: lecUpdated
+                });
+            }
+        }
+    });
+}
+
 //          Borrar Contenido            
 
-function deleteContenido(req, res) {
-    var contId = req.params.id;
-    Contenido.findByIdAndRemove(contId, (err, contRemoved) => {
+function deleteLeccion(req, res) {
+    var lecId = req.params.id;
+    leccion.findByIdAndRemove(lecId, (err, lecRemoved) => {
        
         if (err) {
             res.status(500).send({
-                message: 'Error al borrar el contenido'
+                message: 'Error al borrar la leccion'
             });
         } else {
-            if (!contRemoved) {
+            if (!lecRemoved) {
                 res.status(404).send({
-                    message: 'No se pudo borrar el contenido'
+                    message: 'No se pudo borrar la leccion'
                 });
             } else {
-                contRemoved
+                lecRemoved
             }
         }
     });
@@ -128,6 +152,7 @@ function deleteContenido(req, res) {
 module.exports = {
     getLeccion,
     saveLeccion,
-    getContenidos,
-    deleteContenido
+    getLecciones,
+    updateLeccion,
+    deleteLeccion
 }
