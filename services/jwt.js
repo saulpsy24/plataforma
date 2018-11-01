@@ -9,7 +9,6 @@ exports.createToken= function(user,){
         name:user.name,
         surname: user.surname,
         email:user.email,
-        address:user.address,
         role:user.role,
         image:user.image,
         iat:moment().unix(),

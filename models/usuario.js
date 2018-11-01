@@ -11,8 +11,6 @@ var UsuarioSchema = Schema({
     image: String,
 
 
-    address: String,
-
     password: String,
     role: String,
 
