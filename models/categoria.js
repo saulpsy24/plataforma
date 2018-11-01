@@ -4,9 +4,7 @@ var Schema = mongoose.Schema;
 
 var CategoriaSchema = Schema({
     name: String,
-    descripcion:String,
-
-
+    descripcion:String
 });
 
 

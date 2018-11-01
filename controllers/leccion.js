@@ -2,17 +2,17 @@
 var path = require('path');
 var fs = require('fs');
 var mongoosePaginate = require('mongoose-pagination');
-var Contenido = require('../models/contenido');
+var Leccion = require('../models/Leccion');
 var Curso = require('../models/curso');
 var ObjectId = require('mongodb').ObjectId;
 
 
 //          Obtener 1 contenido 
 
-function getContenido(req, res) {
+function getLeccion(req, res) {
     var idCont = req.params.id;
 
-    Contenido.findById(idCont).populate({
+    Leccion.findById(idCont).populate({
         path: 'Curso'
     }).exec((err, contenido) => {
         if (err) {
@@ -34,15 +34,16 @@ function getContenido(req, res) {
 }
 //          Guradar el Contenido
 
-function saveContenido(req, res) {
-    var contenido = new Contenido();
+function saveLeccion(req, res) {
+    var leccion = new Leccion();
     var params = req.body;
-    contenido.title = params.title;
-    contenido.src = params.src;
-    contenido.description = params.description;
-    contenido.curso = params.curso;
+   leccion.titulo = params.titulo;
+   leccion.video=params.video;
+   leccion.files='No hay archivos...';
+   leccion.curso=params.curso;
+   leccion.state=params.state;
     
-    contenido.save((err, contSaved) => {
+    leccion.save((err, contSaved) => {
         if(err){
             res.status(500).send({
                 message: 'Error al guardar en el Servidor'
@@ -125,8 +126,8 @@ function deleteContenido(req, res) {
 
 
 module.exports = {
-    getContenido,
-    saveContenido,
+    getLeccion,
+    saveLeccion,
     getContenidos,
     deleteContenido
 }
