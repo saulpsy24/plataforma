@@ -47,7 +47,7 @@ function saveCuestionario(req, res) {
     cuestionario.save((err, cuestSaved) => {
         if(err){
             res.status(500).send({
-                message: 'Error al guardar el cuestionario en el Servidor'
+                message: 'Error al guardar en el Servidor el cuestionario'
             });
         }else{
             if (!cuestSaved) {
