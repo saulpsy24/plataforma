@@ -70,12 +70,12 @@ function getLecciones(req, res) {
 
         // Si no existe, obtienes todas las lecciones
 
-        var find = leccion.find({}).sort('titulo');
+        var find = Leccion.find({}).sort('titulo');
     } else {
         
         // Mostrar por Id 
 
-        var find = leccion.find({
+        var find = Leccion.find({
             curso: cursoId
         }).sort('name');
     }
